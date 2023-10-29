@@ -1,0 +1,87 @@
+﻿using MyBabilon.FilesReader;
+using MyBabilon.Models;
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MyBabilon.Translater
+{
+    public class T : Reader
+    {
+
+        protected string? _lang;
+
+        public string getLang()
+        {
+            if (this._lang == null)
+                throw new Exception("Language not selected, please use setLang method");
+
+            return (string)this._lang;
+        }
+
+        public T(string? lang = null)
+        {
+            if(lang != null)
+            {
+                this._lang = lang;
+            }
+            Reader.UpdateLangs();
+        }
+        
+        public static T setLang(string lang)
+        {
+            var instance = new T(lang.ToLower());
+            return instance;
+        }
+
+        public string? Compile(string iteredString, bool stricMode = false)
+        {
+            if (LangModel.Languages != null && LangModel.Languages.TryGetValue(getLang(), out var Strings))
+            {
+                if(Strings.TryGetValue(iteredString, out var result))
+                {
+                    return result;
+                }
+
+                if (result == null && !stricMode) return iteredString;
+                else return null;
+            }
+
+            if (!stricMode) return iteredString;
+            else return null;
+        }
+
+        public string? Compile(string iteredString, Dictionary<string, string> forReplace, bool stricMode = false)
+        {
+            if (LangModel.Languages != null && LangModel.Languages.TryGetValue(this._lang, out var Strings))
+            {
+                if (Strings.TryGetValue(iteredString, out var result))
+                {
+                    foreach (var data in forReplace)
+                    {
+                        result.Replace("{" + data.Key + "}", data.Value);
+                    }
+                    return result;
+                }
+
+                if (result == null && !stricMode) return iteredString;
+                else return null;
+            }
+
+            if (!stricMode) return iteredString;
+            else return null;
+        }
+
+        public static List<string> getLangs()
+        {
+            if(LangModel.Languages != null)
+                return LangModel.Languages.Keys.ToList();
+
+            return new List<string>();
+        }
+
+    }
+}

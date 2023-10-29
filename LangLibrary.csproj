@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>MyBabilon</RootNamespace>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>MyBabilon.AppLocalizator</PackageId>
+    <Title>App Localizator</Title>
+    <Authors>Konstantin Chizhov</Authors>
+    <Company>MyBabilon</Company>
+    <Version>1.0.0.1</Version>
+    <Product>AppLocalizator</Product>
+    <AnalysisLevel>6.0</AnalysisLevel>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <PackageLicenseExpression>0BSD</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <SignAssembly>False</SignAssembly>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyBabilon.MbdfReader\MyBabilon.MbdfReader.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ConfigResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConfigResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="ConfigResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConfigResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
