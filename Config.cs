@@ -1,21 +1,25 @@
-﻿using MyBabilon.Models;
+﻿using Newtonsoft.Json;
+using OftobTech.AppLocalizator.Models;
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace MyBabilon.Config
+namespace OftobTech.AppLocalizator
 {
-    public static class Config
+    public class Config
     {
+        private static ConfigModel _config = null;
+        public static string app_path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         /// <summary>
         ///  Publishes the configuration file to the file system
         /// </summary>
         /// <exception cref="Exception"></exception>
         public static void PublishConfig()
         {
-            if (Directory.Exists(ConfigResource.config_directory_name))
+            if (Directory.Exists(app_path + "\\" + ConfigResource.config_directory_name))
             {
                 if (File.Exists(ConfigResource.config_path))
                 {
@@ -24,10 +28,10 @@ namespace MyBabilon.Config
             }
             else
             {
-                Directory.CreateDirectory(ConfigResource.config_directory_name);
+                Directory.CreateDirectory(app_path + "\\" + ConfigResource.config_directory_name);
             }
 
-            var stream = File.Create(ConfigResource.config_path);
+            var stream = File.Create(app_path + "\\" + ConfigResource.config_path);
 
             stream.Write(Encoding.UTF8.GetBytes(ConfigResource.def_config));
             stream.Close();
@@ -43,9 +47,12 @@ namespace MyBabilon.Config
             var config = new ConfigModel();
             Dictionary<string, string>? configData = null;
 
-            if (!File.Exists(ConfigResource.config_path))
+            Console.WriteLine("path to config: " + app_path + "\\" + ConfigResource.config_path);
+
+            if (!File.Exists(app_path + "\\" + ConfigResource.config_path))
             {
-                configData = MbdfReader.Parser.ParseFile(ConfigResource.config_path);
+                
+                configData = Parser.ParseFile(app_path + "\\" + ConfigResource.config_path);
                 if(configData == null)
                 {
                     throw new Exception("Read configuration error");
@@ -53,25 +60,36 @@ namespace MyBabilon.Config
             }
             else
             {
-                var fileContent = File.ReadAllText(ConfigResource.config_path);
+                var fileContent = File.ReadAllText(app_path + "\\" + ConfigResource.config_path);
 
-                configData = MbdfReader.Parser.ParseText(fileContent);
+                configData = Parser.ParseText(fileContent);
             }
 
             config.DefaultLang = tryGetValue(configData, "DefaultLang", "en");
-            config.LangsFilesPath = tryGetValue(configData, "LangsFilesPath", @"App\Langs");
+            config.LangsFilesPath = tryGetValue(configData, "LangsFilesPath", @"Langs");
 
             return config;
         }
 
+        public static void UpdateConfig()
+        {
+            _config = ReadConfig();
+        } 
+
+        public static ConfigModel getConfig()
+        {
+            return _config;
+        }
+
+
         #pragma warning disable CS8629 // Тип значения, допускающего NULL, может быть NULL.
         private static string tryGetValue(Dictionary<string, string> dict, string key, string default_value)
         {
-            return dict
-                .Where(e => e.Key == key)
-                .Select(e => (KeyValuePair<string, string>?)e)
-                .FirstOrDefault(new KeyValuePair<string, string>(key, default_value))
-                .Value.Value;
+            if(dict.TryGetValue(key, out var value)){
+                return value;
+            }
+               
+            return default_value;
         }
         #pragma warning restore CS8629 // Тип значения, допускающего NULL, может быть NULL.
     }

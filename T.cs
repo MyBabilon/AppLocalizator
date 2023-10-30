@@ -1,13 +1,10 @@
-﻿using MyBabilon.FilesReader;
-using MyBabilon.Models;
+﻿using OftobTech.AppLocalizator.Models;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MyBabilon.Translater
+
+namespace OftobTech.AppLocalizator
 {
     public class T : Reader
     {
@@ -39,7 +36,7 @@ namespace MyBabilon.Translater
 
         public string? Compile(string iteredString, bool stricMode = false)
         {
-            if (LangModel.Languages != null && LangModel.Languages.TryGetValue(getLang(), out var Strings))
+            if (LangModel.Languages.TryGetValue(getLang(), out var Strings))
             {
                 if(Strings.TryGetValue(iteredString, out var result))
                 {
@@ -56,7 +53,7 @@ namespace MyBabilon.Translater
 
         public string? Compile(string iteredString, Dictionary<string, string> forReplace, bool stricMode = false)
         {
-            if (LangModel.Languages != null && LangModel.Languages.TryGetValue(this._lang, out var Strings))
+            if (LangModel.Languages.TryGetValue(getLang(), out var Strings))
             {
                 if (Strings.TryGetValue(iteredString, out var result))
                 {

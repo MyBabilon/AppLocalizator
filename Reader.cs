@@ -1,31 +1,37 @@
 ﻿using System.Reflection;
 using System.Collections.Generic;
-using MyBabilon.Models;
+using OftobTech.AppLocalizator.Models;
+using OftobTech.AppLocalizator;
+using System.IO;
+using System;
 
-namespace MyBabilon.FilesReader
+namespace OftobTech.AppLocalizator
 {
     public class Reader
     {
-        protected static void UpdateLangs(bool forece = false)
+        public static void UpdateLangs(bool forece = false)
         {
             if (LangModel.Languages == null || forece)
             {
+                if(LangModel.Languages != null) LangModel.Languages.Clear();
                 LangModel.Languages = scanAppFolder();
             }
         }
 
-        protected static Dictionary<string, Dictionary<string, string>> scanAppFolder()
+        public static Dictionary<string, Dictionary<string, string>>? scanAppFolder()
         {
-            var path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-            path = path + @"\Langs";
+            var config = Config.getConfig();
 
-            if(!Directory.Exists(path))
+            path = path + "\\" + config.LangsFilesPath;
+            Console.WriteLine("Langs files path: " + path);
+            if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
 
-            var  langs = new Dictionary<string, Dictionary<string, string>>();
+            Dictionary<string, Dictionary<string, string>>? langs = new Dictionary<string, Dictionary<string, string>>();
 
             foreach (string file in Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories))
             {
@@ -39,9 +45,9 @@ namespace MyBabilon.FilesReader
 
                 if (fileName == null) continue;
 
-                langs[lang] = MbdfReader.Parser.ParseFile(file);
+                langs[lang] = new Dictionary<string, string>( Parser.ParseFile(file));
             }
-
+            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(langs));
             return langs;
         }
     }

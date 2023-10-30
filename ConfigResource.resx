@@ -124,7 +124,7 @@
     <value>lang.conf</value>
   </data>
   <data name="config_path" xml:space="preserve">
-    <value>config/lang.conf</value>
+    <value>config\lang.conf</value>
   </data>
   <data name="def_config" xml:space="preserve">
     <value># The default language will be used if it 
@@ -133,6 +133,6 @@ DefaultLang: en
 
 # The address of the language files can be either relative or absolute
 # `App` - the root directory of the application
-LangsFilesPath: App/Langs</value>
+LangsFilesPath: Langs</value>
   </data>
 </root>

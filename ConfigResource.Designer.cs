@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyBabilon {
+namespace OftobTech {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MyBabilon {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyBabilon.ConfigResource", typeof(ConfigResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("OftobTech.ConfigResource", typeof(ConfigResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -79,7 +79,7 @@ namespace MyBabilon {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на config/lang.conf.
+        ///   Ищет локализованную строку, похожую на config\lang.conf.
         /// </summary>
         internal static string config_path {
             get {
@@ -94,7 +94,7 @@ namespace MyBabilon {
         ///
         ///# The address of the language files can be either relative or absolute
         ///# `App` - the root directory of the application
-        ///LangsFilesPath: App/Langs.
+        ///LangsFilesPath: Langs.
         /// </summary>
         internal static string def_config {
             get {

@@ -1,16 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>MyBabilon</RootNamespace>
+    <RootNamespace>OftobTech</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>MyBabilon.AppLocalizator</PackageId>
+    <PackageId>OftobTech.AppLocalizator</PackageId>
     <Title>App Localizator</Title>
     <Authors>Konstantin Chizhov</Authors>
-    <Company>MyBabilon</Company>
-    <Version>1.0.0.1</Version>
+    <Company>OftobTech</Company>
+    <Version>1.0.0.4</Version>
     <Product>AppLocalizator</Product>
     <AnalysisLevel>6.0</AnalysisLevel>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
@@ -18,10 +18,19 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <SignAssembly>False</SignAssembly>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <RepositoryUrl>https://github.com/oftob-tech/AppLocalizator</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
+    <WarningLevel>6</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
+    <WarningLevel>6</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyBabilon.MbdfReader\MyBabilon.MbdfReader.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="1.0.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +46,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ConfigResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="OftobTech.OftbReader">
+      <Version>1.0.0</Version>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
