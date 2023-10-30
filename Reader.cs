@@ -47,7 +47,6 @@ namespace OftobTech.AppLocalizator
 
                 langs[lang] = new Dictionary<string, string>( Parser.ParseFile(file));
             }
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(langs));
             return langs;
         }
     }

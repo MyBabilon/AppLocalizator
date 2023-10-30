@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using OftobTech.AppLocalizator.Models;
-
+﻿using OftobTech.AppLocalizator.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;

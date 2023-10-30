@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -10,7 +9,7 @@
     <Title>App Localizator</Title>
     <Authors>Konstantin Chizhov</Authors>
     <Company>OftobTech</Company>
-    <Version>1.0.0.4</Version>
+    <Version>1.0.0.6</Version>
     <Product>AppLocalizator</Product>
     <AnalysisLevel>6.0</AnalysisLevel>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
@@ -30,10 +29,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="1.0.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="ConfigResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -47,11 +42,4 @@
       <LastGenOutput>ConfigResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="OftobTech.OftbReader">
-      <Version>1.0.0</Version>
-    </PackageReference>
-  </ItemGroup>
-
 </Project>
