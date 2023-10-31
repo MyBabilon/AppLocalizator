@@ -1,26 +1,53 @@
-﻿using System.Reflection;
+﻿
+/* Необъединенное слияние из проекта "OftobTech.AppLocalizator (net5.0)"
+До:
+using System.Reflection;
 using System.Collections.Generic;
 using OftobTech.AppLocalizator.Models;
 using OftobTech.AppLocalizator;
-using System.IO;
+После:
+using System.AppLocalizator;
+using OftobTech.AppLocalizator.Models;
 using System;
+using System.Collections.Generic;
+*/
+using OftobTech.AppLocalizator.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace OftobTech.AppLocalizator
 {
     public class Reader
     {
-        public static void UpdateLangs(bool forece = false)
+        /// <summary>
+        /// Updating the language files in the application memory
+        /// </summary>
+        /// <param name="force">Forced launch, overwriting existing data</param>
+        public static void UpdateLangs(bool forсе = false)
         {
-            if (LangModel.Languages == null || forece)
+            if (LangModel.Languages == null || forсе)
             {
-                if(LangModel.Languages != null) LangModel.Languages.Clear();
-                LangModel.Languages = scanAppFolder();
+                if (LangModel.Languages != null) LangModel.Languages.Clear();
+                LangModel.Languages = ScanAppFolder();
             }
         }
 
-        public static Dictionary<string, Dictionary<string, string>>? scanAppFolder()
+        /// <summary>
+        /// Scaning Application lang folder
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static Dictionary<string, Dictionary<string, string>>? ScanAppFolder()
         {
-            var path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var assembly = Assembly.GetEntryAssembly();
+            if (assembly == null)
+            {
+                throw new Exception("Critical error cant get Assembly");
+            }
+
+            var path = Path.GetDirectoryName(assembly.Location);
 
             var config = Config.getConfig();
 
@@ -41,11 +68,11 @@ namespace OftobTech.AppLocalizator
                 if (fileName == null) continue;
 
                 var langParts = fileName.Split('.');
-                var lang = (langParts.Length == 2)? langParts[0] : null;
+                var lang = (langParts.Length == 2) ? langParts[0] : "";
 
                 if (fileName == null) continue;
 
-                langs[lang] = new Dictionary<string, string>( Parser.ParseFile(file));
+                langs[lang] = new Dictionary<string, string>(Parser.ParseFile(file));
             }
             return langs;
         }

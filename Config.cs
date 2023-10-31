@@ -12,10 +12,11 @@ namespace OftobTech.AppLocalizator
     {
 
         private static readonly ILog _log = LogManager.GetLogger(typeof(Config));
-        public static ConfigModel _config = null;
+        public static ConfigModel? _config = null;
         public static string app_path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
         /// <summary>
-        ///  Publishes the configuration file to the file system
+        ///  Publishe the configuration file to the file system
         /// </summary>
         /// <exception cref="Exception"></exception>
         public static bool PublishConfig()
@@ -54,9 +55,9 @@ namespace OftobTech.AppLocalizator
 
             if (!File.Exists(app_path + "\\" + ConfigResource.config_path))
             {
-                
+
                 configData = Parser.ParseFile(app_path + "\\" + ConfigResource.config_path);
-                if(configData == null)
+                if (configData == null)
                 {
                     throw new Exception("Read configuration error");
                 }
@@ -68,30 +69,45 @@ namespace OftobTech.AppLocalizator
                 configData = Parser.ParseText(fileContent);
             }
 
-            config.DefaultLang = tryGetValue(configData, "DefaultLang", "en");
-            config.LangsFilesPath = tryGetValue(configData, "LangsFilesPath", @"Langs");
+            config.DefaultLang = TryGetValue(configData, "DefaultLang", "en");
+            config.LangsFilesPath = TryGetValue(configData, "LangsFilesPath", @"Langs");
 
             return config;
         }
 
+        /// <summary>
+        /// Update local variable from file or resource
+        /// </summary>
         public static void UpdateConfig()
         {
             _config = ReadConfig();
-        } 
+        }
 
+        /// <summary>
+        /// Retview config
+        /// </summary>
+        /// <returns></returns>
         public static ConfigModel getConfig()
         {
             return _config;
         }
 
 
-        #pragma warning disable CS8629 // Тип значения, допускающего NULL, может быть NULL.
-        private static string tryGetValue(Dictionary<string, string> dict, string key, string default_value)
+#pragma warning disable CS8629 // Тип значения, допускающего NULL, может быть NULL.
+        /// <summary>
+        /// An attempt to get a value by key, otherwise we return the default value
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="default_value"></param>
+        /// <returns></returns>
+        private static string? TryGetValue(Dictionary<string, string> dict, string key, string? default_value = null)
         {
-            if(dict.TryGetValue(key, out var value)){
+            if (dict.TryGetValue(key, out var value))
+            {
                 return value;
             }
-               
+
             return default_value;
         }
 #pragma warning restore CS8629 // Тип значения, допускающего NULL, может быть NULL.
