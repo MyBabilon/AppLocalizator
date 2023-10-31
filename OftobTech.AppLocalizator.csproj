@@ -9,7 +9,7 @@
     <Title>App Localizator</Title>
     <Authors>Konstantin Chizhov</Authors>
     <Company>OftobTech</Company>
-    <Version>1.0.0.6</Version>
+    <Version>1.0.0.7</Version>
     <Product>AppLocalizator</Product>
     <AnalysisLevel>6.0</AnalysisLevel>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
@@ -27,6 +27,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
     <WarningLevel>6</WarningLevel>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.15" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="ConfigResource.Designer.cs">

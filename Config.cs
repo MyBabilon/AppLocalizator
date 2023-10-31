@@ -1,4 +1,5 @@
-﻿using OftobTech.AppLocalizator.Models;
+﻿using log4net;
+using OftobTech.AppLocalizator.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,19 +10,22 @@ namespace OftobTech.AppLocalizator
 {
     public class Config
     {
-        private static ConfigModel _config = null;
+
+        private static readonly ILog _log = LogManager.GetLogger(typeof(Config));
+        public static ConfigModel _config = null;
         public static string app_path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         /// <summary>
         ///  Publishes the configuration file to the file system
         /// </summary>
         /// <exception cref="Exception"></exception>
-        public static void PublishConfig()
+        public static bool PublishConfig()
         {
             if (Directory.Exists(app_path + "\\" + ConfigResource.config_directory_name))
             {
                 if (File.Exists(ConfigResource.config_path))
                 {
-                    throw new Exception("Lang config file is already exists, please delete them and run this command one more time");
+                    _log.Error("Lang config file is already exists, please delete them and run this command one more time");
+                    return false;
                 }
             }
             else
@@ -33,6 +37,7 @@ namespace OftobTech.AppLocalizator
 
             stream.Write(Encoding.UTF8.GetBytes(ConfigResource.def_config));
             stream.Close();
+            return true;
         }
 
         /// <summary>
@@ -89,6 +94,6 @@ namespace OftobTech.AppLocalizator
                
             return default_value;
         }
-        #pragma warning restore CS8629 // Тип значения, допускающего NULL, может быть NULL.
+#pragma warning restore CS8629 // Тип значения, допускающего NULL, может быть NULL.
     }
 }

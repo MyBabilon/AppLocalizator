@@ -9,34 +9,45 @@ namespace OftobTech.AppLocalizator
     public class T : Reader
     {
 
-        protected string? _lang;
+        protected static string? _lang;
+        protected static T? _instance;
 
         public string getLang()
         {
-            if (this._lang == null)
+            if (_lang == null)
                 throw new Exception("Language not selected, please use setLang method");
 
-            return (string)this._lang;
+            return (string)_lang;
         }
 
         public T(string? lang = null)
         {
             if(lang != null)
             {
-                this._lang = lang;
+                _lang = lang;
+            }
+            else
+            {
+                _lang = Config._config.DefaultLang;
             }
             Reader.UpdateLangs();
+
         }
         
-        public static T setLang(string lang)
+        private static T Init()
         {
-            var instance = new T(lang.ToLower());
-            return instance;
+            if(_instance == null)
+            {
+                _instance = new T((_lang != null ? _lang: null));
+            }
+            
+            return _instance;
         }
 
-        public string? Compile(string iteredString, bool stricMode = false)
+        public static string? Compile(string iteredString, bool stricMode = false)
         {
-            if (LangModel.Languages.TryGetValue(getLang(), out var Strings))
+            var instance = Init();
+            if (LangModel.Languages.TryGetValue(instance.getLang(), out var Strings))
             {
                 if(Strings.TryGetValue(iteredString, out var result))
                 {
@@ -51,15 +62,16 @@ namespace OftobTech.AppLocalizator
             else return null;
         }
 
-        public string? Compile(string iteredString, Dictionary<string, string> forReplace, bool stricMode = false)
+        public static string? Compile(string iteredString, Dictionary<string, string> forReplace, bool stricMode = false)
         {
-            if (LangModel.Languages.TryGetValue(getLang(), out var Strings))
+            var instance = Init();
+            if (LangModel.Languages.TryGetValue(instance.getLang(), out var Strings))
             {
                 if (Strings.TryGetValue(iteredString, out var result))
                 {
                     foreach (var data in forReplace)
                     {
-                        result.Replace("{" + data.Key + "}", data.Value);
+                        result = result.Replace("{" + data.Key + "}", data.Value);
                     }
                     return result;
                 }

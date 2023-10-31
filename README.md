@@ -52,7 +52,6 @@ If the config file has not been created, the default one is taken:
 DefaultLang: en
 
 # The address of the language files can be either relative or absolute
-# `App` - the root directory of the application
 LangsFilesPath: Langs
 ```
 
