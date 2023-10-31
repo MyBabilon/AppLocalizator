@@ -25,8 +25,7 @@ namespace OftobTech.AppLocalizator
             {
                 if (File.Exists(ConfigResource.config_path))
                 {
-                    _log.Error("Lang config file is already exists, please delete them and run this command one more time");
-                    return false;
+                    throw new Exception("Lang config file is already exists, please delete them and run this command one more time");
                 }
             }
             else
@@ -87,7 +86,7 @@ namespace OftobTech.AppLocalizator
         /// Retview config
         /// </summary>
         /// <returns></returns>
-        public static ConfigModel getConfig()
+        public static ConfigModel? getConfig()
         {
             return _config;
         }
