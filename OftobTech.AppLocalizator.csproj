@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net5.0;net6.0;net7.0</TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>OftobTech</RootNamespace>
@@ -9,7 +9,7 @@
     <Title>App Localizator</Title>
     <Authors>Konstantin Chizhov</Authors>
     <Company>OftobTech</Company>
-    <Version>1.0.0.7</Version>
+    <Version>1.0.0.8</Version>
     <Product>AppLocalizator</Product>
     <AnalysisLevel>6.0</AnalysisLevel>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
@@ -19,6 +19,7 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <RepositoryUrl>https://github.com/oftob-tech/AppLocalizator</RepositoryUrl>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
@@ -31,6 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.15" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>
