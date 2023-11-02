@@ -19,7 +19,7 @@ namespace OftobTech.AppLocalizator
         /// </summary>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public string getLang()
+        public static string getLang()
         {
             if (_lang == null)
                 throw new Exception("Language not selected, please use setLang method");
@@ -32,11 +32,12 @@ namespace OftobTech.AppLocalizator
         /// </summary>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public T setLang(string lang)
+        public static T setLang(string lang)
         {
+            var instance = Init();
             lang = PrepareLang(lang);
             _lang = lang;
-            return this;
+            return instance;
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace OftobTech.AppLocalizator
 
             var instance = Init();
 
-            if (LangModel.Languages.TryGetValue(instance.getLang(), out var Strings))
+            if (LangModel.Languages.TryGetValue(getLang(), out var Strings))
             {
                 if (Strings.TryGetValue(iteredString, out var result))
                 {
@@ -118,7 +119,7 @@ namespace OftobTech.AppLocalizator
             }
             var instance = Init();
 
-            if (LangModel.Languages.TryGetValue(instance.getLang(), out var Strings))
+            if (LangModel.Languages.TryGetValue(getLang(), out var Strings))
             {
                 if (Strings.TryGetValue(iteredString, out var result))
                 {

@@ -9,7 +9,7 @@
     <Title>App Localizator</Title>
     <Authors>Konstantin Chizhov</Authors>
     <Company>OftobTech</Company>
-    <Version>1.0.0.9</Version>
+    <Version>1.0.0.10</Version>
     <Product>AppLocalizator</Product>
     <AnalysisLevel>6.0</AnalysisLevel>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
