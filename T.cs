@@ -32,10 +32,11 @@ namespace OftobTech.AppLocalizator
         /// </summary>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public string setLang(string lang)
+        public T setLang(string lang)
         {
             lang = PrepareLang(lang);
-            return lang;
+            _lang = lang;
+            return this;
         }
 
         /// <summary>
