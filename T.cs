@@ -37,7 +37,7 @@ namespace OftobTech.AppLocalizator
             var instance = Init();
             lang = PrepareLang(lang);
             _lang = lang;
-            return instance;
+            return Init();
         }
 
         /// <summary>
@@ -55,14 +55,13 @@ namespace OftobTech.AppLocalizator
                 _lang = Config._config.DefaultLang;
             }
             UpdateLangs();
-
         }
 
         /// <summary>
         /// Init new instance of class
         /// </summary>
         /// <returns></returns>
-        private static T Init()
+        public static T Init()
         {
             if (_instance == null)
             {
@@ -79,7 +78,7 @@ namespace OftobTech.AppLocalizator
         /// <param name="stricMode">Is strict mode</param>
         /// <returns>Compiled string</returns>
         /// <exception cref="Exception"></exception>
-        public static string? Compile(string iteredString, bool stricMode = false)
+        public string? Compile(string iteredString, bool stricMode = false)
         {
             if (LangModel.Languages == null)
             {
@@ -111,7 +110,7 @@ namespace OftobTech.AppLocalizator
         /// <param name="stricMode"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static string? Compile(string iteredString, Dictionary<string, string> forReplace, bool stricMode = false)
+        public string? Compile(string iteredString, Dictionary<string, string> forReplace, bool stricMode = false)
         {
             if (LangModel.Languages == null)
             {

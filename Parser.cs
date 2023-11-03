@@ -55,13 +55,10 @@ namespace OftobTech.AppLocalizator
 
                 if (LineParts.Length > 2)
                 {
-                    for (var i = 1; i < LineParts.Length; i++)
+                    for (var i = 2; i < LineParts.Length; i++)
                     {
+                        LineParts[1] += ":";
                         LineParts[1] += LineParts[i];
-                        if (i < LineParts.Length - 1)
-                        {
-                            LineParts[1] += ":";
-                        }
                     }
                 }
 
